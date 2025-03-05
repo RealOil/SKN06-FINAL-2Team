@@ -27,73 +27,69 @@ conn = pymysql.connect(
 cursor = conn.cursor()
 
 genre_list = [
-    "fantasy",
-    "drama",
-    "romance",
-    "rofan",
-    "historical",
-    "action",
-    "bl"
+    "all"
 ]  # 장르 더 있으면 추가
 
-for genre in genre_list:
-    # 본인 데이터 있는 경로(data부터 시작/본인 폴더/장르명 전까지 파일명)
-    file_path = "webtoon_kkopage/webtoon_kkopage_"
 
-    # JSON 파일 불러오기
-    with open(
-        f"{file_path}{genre}.json",
-        "r",
-        encoding="utf-8",
-    ) as json_file:
-        data = json.load(json_file)
+# 본인 데이터 있는 경로(data부터 시작/본인 폴더/장르명 전까지 파일명)
+file_path = "SKN06-FINAL-2Team/data/webtoon_naver/webtoon_naver"
 
-    # 데이터 삽입 SQL
-    insert_sql = """
-    INSERT INTO contents (
-        id, type, platform, title, status, update_days, thumbnail, genre, views, rating, likes,
-        synopsis, keywords, author, illustrator, original, age_rating, price, url, episode, comments,
-        score, recent_comments_count
-    ) VALUES (
-        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s
+# JSON 파일 불러오기
+with open(
+    f"{file_path}_all.json",
+    "r",
+    encoding="utf-8",
+) as json_file:
+    data = json.load(json_file)
+
+# 데이터 삽입 SQL
+insert_sql = """
+INSERT INTO contents (
+    id, type, platform, title, status, update_days, thumbnail, genre, views, rating, likes,
+    synopsis, keywords, author, illustrator, original, age_rating, price, url, episode, comments, first_episode,
+    score, recent_comments_count
+) VALUES (
+    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s
+)
+"""
+
+# 데이터 삽입
+for row in data:
+    for key, value in row.items():
+        if value == "-":
+            row[key] = None
+    cursor.execute(
+        insert_sql,
+        (
+            row.get("id"),
+            row.get("type"),
+            row.get("platform"),
+            row.get("title"),
+            row.get("status"),
+            row.get("update_days"),
+            row.get("thumbnail"),
+            row.get("genre"),
+            row.get("views"),
+            row.get("rating"),
+            row.get("likes"),
+            row.get("synopsis"),
+            row.get("keywords"),
+            row.get("author"),
+            row.get("illustrator"),
+            row.get("original"),
+            row.get("age_rating"),
+            row.get("price"),
+            row.get("url"),
+            row.get("episode"),
+            row.get("comments"),
+            row.get("first_episode"),
+            row.get("score"),
+            row.get("recent_comments_count")
+            
+        ),
     )
-    """
 
-    # 데이터 삽입
-    for row in data:
-        for key, value in row.items():
-            if value == "-":
-                row[key] = None
-        cursor.execute(
-            insert_sql,
-            (
-                row.get("id"),
-                row.get("type"),
-                row.get("platform"),
-                row.get("title"),
-                row.get("status"),
-                row.get("update_days"),
-                row.get("thumbnail"),
-                row.get("genre"),
-                row.get("views"),
-                row.get("rating"),
-                row.get("likes"),
-                row.get("synopsis"),
-                row.get("keywords"),
-                row.get("author"),
-                row.get("illustrator"),
-                row.get("original"),
-                row.get("age_rating"),
-                row.get("price"),
-                row.get("url"),
-                row.get("episode"),
-                row.get("comments"),
-                row.get("score"),
-                row.get("recent_comments_count"),
-            ),
-        )
-
-    conn.commit()
-    logging.info(f"✅ {genre} 데이터 삽입 완료!")
+conn.commit()
+logging.info(f"✅ 데이터 삽입 완료!")
 cursor.close()
 conn.close()
