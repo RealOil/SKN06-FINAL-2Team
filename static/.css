@@ -52,3 +52,27 @@ html, body {
 .text-muted {
     font-size: 0.9em;
 }
+
+
+/* static/css/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.user-info a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.user-info a:hover {
+    color: #0056b3;
+}
