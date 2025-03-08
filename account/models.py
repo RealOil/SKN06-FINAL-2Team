@@ -5,7 +5,7 @@ from datetime import date
 # User 모델
 class User(AbstractUser):
     # Field 정의 - table 컬럼
-
+    first_login = models.BooleanField(default=True)
 
     name = models.CharField(
         verbose_name="이름",

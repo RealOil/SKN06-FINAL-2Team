@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     "basic_chatbot",
     "romance_chatbot",
     "rofan_chatbot",
-    "hero_chatbot",
+    "fantasy_chatbot",
     "historical_chatbot",
 ]
 

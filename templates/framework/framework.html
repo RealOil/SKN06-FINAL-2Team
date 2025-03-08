@@ -3,25 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기본 레이아웃</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- CSS 파일 경로 -->
-</head>
+    <title>기본 레이아웃</title></head>
 <body>
     <header>
         <nav>
             <div class="navbar">
                 <!-- 로고나 왼쪽 메뉴 -->
-                <a href="{% url 'chatbot:home' %}">홈</a>
-                
                 <div class="user-info">
                     {% if user.is_authenticated %}
-                        <!-- 로그인한 상태 -->
+                        
+                        <a href="{% url 'account:login' %}">로그인</a>
+                    {% else %}
+            
+                        
                         <span>{{ user.username }}님</span>
                         <a href="{% url 'account:user_information' %}">회원 정보</a>
-                        <a href="{% url 'account:user_logout' %}">로그아웃</a>
-                    {% else %}
-                        <!-- 로그인하지 않은 상태 -->
-                        <a href="{% url 'account:user_login' %}">로그인</a>
+                        <a href="{% url "account:logout" %}" class="nav-link">로그아웃</a>
                     {% endif %}
                 </div>
             </div>

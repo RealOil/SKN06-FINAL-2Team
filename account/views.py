@@ -71,7 +71,7 @@ def user_login(request):
 def user_logout(request):
     print("logout")
     logout(request)
-    return render(request, "chatbot/basic_chatbot_na.html")
+    return render(request, "framework/framework.html")
 
 # 회원 정보 조회
 @login_required
