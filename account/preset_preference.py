@@ -51,5 +51,5 @@ def analyze_user_preference(selected_work_ids):
         ai_response = response.choices[0].message.content
         return ai_response  
     except Exception as e:
-        print("OpenAI API 오류:", e)
+        logger.error(f"OpenAI API 오류: {e}")
         return None
