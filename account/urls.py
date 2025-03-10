@@ -12,5 +12,6 @@ urlpatterns = [
     path('edit_information/', views.edit_information, name='edit_information'),
     path('edit_pwd/', views.edit_pwd, name='edit_pwd'),
     path('delete/', views.user_delete, name='delete'),
+    path('preset_preference/',views.preset_preference,name='preset_preference')
 ]
 

@@ -3,10 +3,15 @@ from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.db import connection
+from django.http import JsonResponse
 
+import logging
 from .models import User
 from .forms import SignUpForm, EditInformationForm
+from .preset_preference import analyze_user_preference
 
+logger = logging.getLogger(__name__)
 
 # 회원 가입
 def user_signup(request):
@@ -19,7 +24,7 @@ def user_signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect(reverse("basic_chatbot"))
+            return redirect("account:preset_preference")
         else:
             return render(request, "account/signup.html", {"form": form})
 
@@ -121,3 +126,46 @@ def user_delete(request):
     request.user.delete()
     logout(request)
     return redirect(reverse("basic_chatbot_na"))
+
+# 최초 취향 분석
+def preset_preference(request):
+    if request.method == "GET":
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT id, thumbnail FROM preset_preference_contents")
+            contents = cursor.fetchall()
+
+        # 딕셔너리 리스트로 변환
+        works = [{"id": work[0], "thumbnail": work[1]} for work in contents]
+
+        return render(request, "account/preset_preference.html", {"works": works})
+
+    elif request.method == "POST":
+        if not request.user.is_authenticated:  # 로그인 여부 
+            return JsonResponse({"error": "로그인이 필요합니다."}, status=401)
+
+        selected_works = request.POST.getlist("works")
+
+        if not selected_works:
+            return JsonResponse({"error": "작품을 선택해주세요."}, status=400)
+
+        # 현재 로그인한 회원의 ID 가져오기
+        account_id = request.user.id
+        logger.debug(f"사용자 ID {account_id}님이 선호하는 작품을 선택 중입니다.")
+
+        if not isinstance(account_id, int):  # 정수형이 아니면 변환
+            account_id = int(account_id)
+
+        # 'persona_type' 분석
+        persona_data = analyze_user_preference(selected_works)
+
+        if not persona_data:
+            return JsonResponse({"error": "사용자 분석에 실패했습니다."}, status=500)
+
+        # `preset_preference_account` 테이블에 데이터 저장
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO preset_preference_account (account_id, persona_type) VALUES (%s, %s)",
+                [account_id, persona_data]  
+            )
+
+        return JsonResponse({"message": "저장 완료", "redirect": "/chatbot/basic_chatbot/"})

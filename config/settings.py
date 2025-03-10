@@ -1,5 +1,10 @@
 import pymysql
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# .env 파일 로드
+load_dotenv()
 
 ## 기본 설정
 # 개발 모드
@@ -68,10 +73,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME' : 'pixary', # DB Name
-        'USER' : 'pixary', # DB User
-        'PASSWORD' : '!9dnfl2xlavkdlxld*', # Password
-        'HOST': 'pixary.cpa86cw6csn1.ap-northeast-2.rds.amazonaws.com', # 생성한 데이터베이스 엔드포인트
+        'NAME' : os.getenv("DB_NAME"), # DB Name
+        'USER' : os.getenv("DB_USER"), # DB User
+        'PASSWORD' : os.getenv("DB_PASSWORD"), # Password
+        'HOST': os.getenv("DB_HOST"), # 생성한 데이터베이스 엔드포인트
         'PORT': '3306', 
         'OPTIONS':{
             'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
@@ -107,6 +112,9 @@ USE_TZ = False
 # Static
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# OpenAI API 키 불러오기
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
