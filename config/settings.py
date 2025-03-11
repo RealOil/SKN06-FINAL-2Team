@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "account",
-    "chatbot"
+    "chatbot",
+    "wishlist"
 ]
 
 MIDDLEWARE = [
