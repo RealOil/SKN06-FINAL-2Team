@@ -7,7 +7,7 @@ from langchain.tools import Tool
 
 # 벡터스토어 설정
 vector_store = Chroma(
-    persist_directory="data/Raw_DB/vector_store",
+    persist_directory="data/vector_store",
     collection_name="romance",
     embedding_function=HuggingFaceEmbeddings(model_name="BAAI/bge-m3"),
 )
