@@ -57,7 +57,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
             logger.info(f"로그인 성공: {user.username}") 
-            return render("chatbot/basic_chatbot.html")
+            return redirect("chatbot:basic_chatbot")
 
         else:
             return render(
