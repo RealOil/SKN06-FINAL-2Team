@@ -11,13 +11,13 @@ load_dotenv()
 DEBUG = True
 
 # secret key
-SECRET_KEY = 'h99x_#9)bw)beotdxobhq-g)0=@hk5kccd%!g3+!l88zt+vlz%'
+SECRET_KEY = "h99x_#9)bw)beotdxobhq-g)0=@hk5kccd%!g3+!l88zt+vlz%"
 
 # 허용되는 호스트 도메인 주소
 ALLOWED_HOSTS = ["*"]
 
 # 디렉토리 경로 설정
-BASE_DIR = Path(__file__).resolve().parent.parent 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Apps
 INSTALLED_APPS = [
@@ -29,21 +29,21 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "account",
     "chatbot",
-    # "wishlist"
+    # "wishlist",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 # Root urls
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 # Templates
 TEMPLATES = [
@@ -63,20 +63,18 @@ TEMPLATES = [
 ]
 
 # wsgi
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 # DataBases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME' : os.getenv("DB_NAME"), # DB Name
-        'USER' : os.getenv("DB_USER"), # DB User
-        'PASSWORD' : os.getenv("DB_PASSWORD"), # Password
-        'HOST': os.getenv("DB_HOST"), # 생성한 데이터베이스 엔드포인트
-        'PORT': '3306', 
-        'OPTIONS':{
-            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
-        }
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("DB_NAME"),  # DB Name
+        "USER": os.getenv("DB_USER"),  # DB User
+        "PASSWORD": os.getenv("DB_PASSWORD"),  # Password
+        "HOST": os.getenv("DB_HOST"),  # 생성한 데이터베이스 엔드포인트
+        "PORT": "3306",
+        "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
     }
 }
 
@@ -121,4 +119,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # 로그인 해야 실행할 수 있는 View를 호출
 LOGIN_URL = "/account/login"
-AUTH_USER_MODEL = 'account.User'  # 'account'는 해당 앱 이름
+AUTH_USER_MODEL = "account.User"  # 'account'는 해당 앱 이름
