@@ -11,14 +11,13 @@
                 <!-- 로고나 왼쪽 메뉴 -->
                 <div class="user-info">
                     {% if user.is_authenticated %}
-                        
-                        <a href="{% url 'account:login' %}">로그인</a>
-                    {% else %}
-            
-                        
                         <span>{{ user.username }}님</span>
                         <a href="{% url 'account:user_information' %}">회원 정보</a>
-                        <a href="{% url "account:logout" %}" class="nav-link">로그아웃</a>
+                        <a href="{% url 'account:logout' %}" class="nav-link">로그아웃</a>
+                        
+                    {% else %}
+                        <a href="{% url 'account:login' %}">로그인</a>
+                        
                     {% endif %}
                 </div>
             </div>

@@ -74,13 +74,15 @@ def user_login(request):
 def user_logout(request):
     print("logout")
     logout(request)
-    return render(request, "framework/framework.html")
+    return redirect("chatbot:basic_chatbot_na")
+    
+
 
 # 회원 정보 조회
 @login_required
 def user_information(request):
     object = User.objects.get(pk=request.user.pk)
-    return render(request, "account/user_inforamtion.html", {"user": object})
+    return render(request, "account/user_information.html", {"user": object})
 
 # 회원 정보 수정
 @login_required
