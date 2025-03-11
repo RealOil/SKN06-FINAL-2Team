@@ -1,11 +1,7 @@
-/* 전체 화면을 100%로 설정하여 중앙 정렬이 가능하도록 함 */
 html, body {
-    height: 100vh;
+    width: 100%;
+    height: 100vh; /* 전체 화면 고정 */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f8f8;
-    margin: 0;
 }
 
 /* 로그인 컨테이너를 중앙에 배치 */
@@ -53,8 +49,6 @@ html, body {
     font-size: 0.9em;
 }
 
-
-/* static/css/styles.css */
 
 body {
     font-family: Arial, sans-serif;
@@ -148,7 +142,7 @@ h2 {
 .button-container {
     display: flex;
     justify-content: center;
-    gap: 15px; /* 버튼 사이 간격 */
+    gap: 45px; /* 버튼 사이 간격 */
     margin-bottom: 10px;
 }
 

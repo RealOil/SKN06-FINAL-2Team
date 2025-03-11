@@ -1,3 +1,15 @@
+
 {% extends "framework/framework.html" %}
 
 {% block title %} 기본 챗봇_회원{% endblock title %}
+{% load static %}
+
+{% block content %}
+<div class="chat-container">
+    <h2>챗봇 선택</h2>
+    <!-- 버튼을 가로 정렬 -->
+    <div class="button-container">
+        <a href="/chatbot/romance_chatbot/" class="btn btn-login">로맨스</a>
+    </div>
+</div>
+{% endblock content %}
