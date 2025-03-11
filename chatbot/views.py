@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 import markdown2
 
-
 def basic_chatbot_na_view(request):
     return render(request, "chatbot/basic_chatbot_na.html")
 @login_required
