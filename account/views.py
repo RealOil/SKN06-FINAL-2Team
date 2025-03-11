@@ -51,15 +51,13 @@ def user_login(request):
         else:
             username = username_or_email
 
-
+        user = authenticate(request, username=username, password=password)
 
         # 비밀번호 인증
-        if username:
-            user = authenticate(request, username=username, password=password)
-
-            return render(
-            request, "chatbot/basic_chatbot.html"
-        )
+        if user is not None:
+            login(request, user)
+            logger.info(f"로그인 성공: {user.username}") 
+            return render("chatbot/basic_chatbot.html")
 
         else:
             return render(
