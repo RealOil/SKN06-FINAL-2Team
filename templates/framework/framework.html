@@ -15,8 +15,10 @@
                         <a href="{% url 'account:user_information' %}">회원 정보</a>
                         <a href="{% url 'account:logout' %}" class="nav-link">로그아웃</a>
                         
+
                     {% else %}
                         <a href="{% url 'account:login' %}">로그인</a>
+                        
                         
                     {% endif %}
                 </div>
@@ -30,9 +32,6 @@
         {% endblock %}
     </main>
 
-    <footer>
-        <!-- 하단 푸터 내용 -->
-        <p>&copy; 2025 Company</p>
-    </footer>
+
 </body>
 </html>

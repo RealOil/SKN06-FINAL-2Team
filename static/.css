@@ -4,15 +4,7 @@ html, body {
     display: flex;
 }
 
-/* 로그인 컨테이너를 중앙에 배치 */
-.login-container {
-    width: 350px;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-}
+
 
 /* 밑줄 디자인 */
 .underline {
@@ -28,21 +20,6 @@ html, body {
     font-size: 16px;
 }
 
-/* 로그인 버튼 스타일 */
-.login-btn {
-    width: 100%;
-    background-color: #00a059;
-    color: white;
-    font-size: 18px;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.login-btn:hover {
-    background-color: #00804a;
-}
 
 /* 회원가입 링크 스타일 */
 .text-muted {
@@ -142,7 +119,7 @@ h2 {
 .button-container {
     display: flex;
     justify-content: center;
-    gap: 45px; /* 버튼 사이 간격 */
+    gap: 2px; /* 버튼 사이 간격 */
     margin-bottom: 10px;
 }
 

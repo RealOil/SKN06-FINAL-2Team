@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "account",
     "chatbot",
-    "wishlist"
+    # "wishlist"
 ]
 
 MIDDLEWARE = [
