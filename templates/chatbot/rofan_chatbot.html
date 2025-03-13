@@ -1,1 +1,275 @@
-{% block title %} rofan 챗봇_회원{% endblock title %}
+{% extends "framework/framework.html" %}
+{% load static %}
+{% block title %}로맨스 판타지 챗봇_회원{% endblock title %}
+{% block content %}
+
+<head>
+    <style>
+        /* 🔹 모달 스타일 */
+        .modal {
+            display: flex;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.78);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            width:80%;
+            max-width: 700px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .modal img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 🔹 텍스트 */
+        .modal-text {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+            color: white;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.2;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 2s ease-out forwards;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-64px);
+            }
+        }
+
+        /* 🔹 채팅 시작 버튼 */
+        .start-chat-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            background-color: #5e5f5f;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .start-chat-btn:hover {
+            background-color: #079bfd;
+        }
+
+        /* 🔹 채팅 컨테이너 스타일 */
+        .chat-container {
+            width: 100%;
+            max-width: 900px;
+            height: 70vh;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 🔹 채팅 박스 (메시지 영역) */
+        .chat-box {
+            flex-grow: 1;
+            padding: 15px;
+            height: calc(100% - 95px); /* 🔹 높이 자동 조정 */
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* 🔹 위아래 간격 조정 */
+            background-color: #f8f8f8;
+            scroll-behavior: smooth;
+        }
+
+        /* 🔹 채팅 메시지 공통 스타일 */
+        .chat-message {
+            display: flex;
+            align-items: flex-end;
+            max-width: 75%;
+        }
+
+        /* 🔹 사용자 메시지 (오른쪽 정렬) */
+        .user-message {
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        /* 🔹 AI 메시지 (왼쪽 정렬) */
+        .ai-message {
+            align-self: flex-start;
+            text-align: left;
+        }
+
+        /* 🔹 말풍선 스타일 */
+        .message-text {
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 100%;
+            font-size: 15px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .user-text {
+            background: #007bff;
+            color: white;
+        }
+
+        .ai-text {
+            background: #e9ecef;
+            color: black;
+        }
+
+        /* 🔹 프로필 이미지 */
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        /* 🔹 입력창 컨테이너 */
+        .input-container {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid #ddd;
+            background: white;
+            position: relative;
+        }
+
+        .input-container input {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .input-container button {
+            padding: 12px 18px;
+            font-size: 14px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .input-container button:hover {
+            background: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">로맨스판타지 챗봇</h1>
+
+    <!-- 🔹 프롤로그 모달 -->
+    <div id="prologue-modal" class="modal">
+        <div class="modal-content">
+            <img src="{% static 'img/rofan/ai_prologue.png' %}" alt="Rofan AI Prologue">
+            
+            <!-- 🔹 텍스트 영역 -->
+            <div class="modal-text">
+                <p>어둠과 눈보라가 휘몰아치는 북부의 대지</p>
+                <p>그곳, 얼음 같은 절대적인 고요 속에서 단 하나의 존재가 군림하고 있었다.</p>
+                <p>그는 카이델 루아 크로이츠, 북부대공이자 얼음의 군주.</p>
+                <p>그의 붉은 눈동자는 어둠 속에서도 이글거렸고,</p>
+                <p>그 앞에 선 자는 누구도 거역할 수 없는 강렬한 존재감을 지니고 있었다.</p>
+                <p>하지만 지금, 그의 시선은 낯선 누군가를 향해 있었다.</p>
+                <p>“…왔군요.”</p>
+                <p>깊고 낮은 목소리가 귓가를 울린다.</p>
+                <p>“오래 기다렸습니다, 영애.”</p>
+                <p>이곳은 무수한 운명이 교차하는 세계.</p>
+                <p>당신이 원하는 이야기가 태어나는 곳.</p>
+                <h2>그대는 이제, 운명의 페이지를 펼칠 준비가 되었는가?</h2>
+            </div>
+            <!-- 🔹 버튼을 모달 내부 하단으로 이동 -->
+            <div class="button-container">
+                <button class="start-chat-btn" id="start-chat-btn">대화를 시작합니다</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 기존 채팅창 (프롤로그 후 나타남) -->
+    <div id="chat-container" class="chat-container">
+        <div id="chat-box" class="chat-box"></div>
+        <div class="input-container">
+            <input type="text" id="question" placeholder="메시지를 입력하세요..." onkeypress="if(event.keyCode==13) askChatbot()">
+            <button onclick="askChatbot()">전송</button>
+        </div>
+    </div>
+
+    <script>
+        function startChat() {
+            let modal = document.getElementById("prologue-modal");
+            let chatContainer = document.getElementById("chat-container");
+
+            if (modal && chatContainer) {
+                modal.style.display = "none";  // 모달 숨김
+                chatContainer.style.display = "block";  // 채팅창 표시
+
+                // 🔹 채팅창 위치로 스크롤 이동 (부드러운 효과)
+                setTimeout(() => {
+                    chatContainer.scrollIntoView({ behavior: 'smooth' });
+                }, 200);
+            } else {
+                console.error("모달 또는 채팅창 요소를 찾을 수 없습니다.");
+            }
+        }
+
+        document.getElementById("start-chat-btn").addEventListener("click", startChat);
+        function askChatbot() {
+            const question = document.getElementById("question").value;
+            if (!question.trim()) return;
+
+            const chatBox = document.getElementById("chat-box");
+
+            const userMessage = `<div class="chat-message user-message">
+                <span class="message-text user-text">${question}</span>
+                <img src="/static/img/rofan/user_profile.png" alt="User" class="profile-pic">
+            </div>`;
+            chatBox.innerHTML += userMessage;
+            document.getElementById("question").value = "";
+
+            fetch(`?question=${encodeURIComponent(question)}`)
+                .then(response => response.text())
+                .then(data => {
+                    const aiMessage = `<div class="chat-message ai-message">
+                        <img src="/static/img/rofan/ai_profile.png" alt="AI" class="profile-pic">
+                        <span class="message-text ai-text">${data}</span>
+                    </div>`;
+                    chatBox.innerHTML += aiMessage;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(error => console.error("오류 발생:", error));
+        }
+    </script>
+</body>
+{% endblock content %}

@@ -7,7 +7,7 @@ class RecommendedWork(models.Model):
     account_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content_id = models.IntegerField()
     recommended_model = models.CharField(max_length=50)
-    recommended_date = models.DateTimeField(auto_now_add=True)
+    recommended_date = models.DateTimeField(auto_now_add=True, null=True)
     feedback = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
