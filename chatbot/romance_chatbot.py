@@ -25,10 +25,10 @@ def get_user_memory(session_id):
 
 # Tool 설정
 romance_webnovel_tool = selfquery_tool(
-    "romance", "data/basic/romance"
+    "romance", "data/vector_store/romance"
 )
 romance_webtoon_tool = selfquery_tool(
-    "bl", "data/basic/bl"
+    "bl", "data/vector_store/bl"
 )
 
 
